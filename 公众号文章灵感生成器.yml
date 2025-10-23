@@ -1,0 +1,189 @@
+app:
+  description: 公众号文章灵感生成器
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 公众号文章灵感生成器
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1761210416032-source-1761210423213-target
+      source: '1761210416032'
+      sourceHandle: source
+      target: '1761210423213'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1761210423213-source-1761210468997-target
+      source: '1761210423213'
+      sourceHandle: source
+      target: '1761210468997'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: 关键词
+          max_length: 48
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: keyword
+      height: 88
+      id: '1761210416032'
+      position:
+        x: 107
+        y: 45
+      positionAbsolute:
+        x: 107
+        y: 45
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1761210416032'
+          - keyword
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 5e713beb-c34c-4388-bf27-f4d8443f6e51
+          role: system
+          text: '你是一个拥有10年经验的微信公众号资深编辑，擅长捕捉热点和创作爆款文章。
+
+            请根据用户提供的【核心关键词】，生成3个不同角度的公众号文章标题和一段详细的大纲。
+
+
+            核心关键词：{{#1761210416032.keyword#}}
+
+
+            要求：
+
+            - 标题要吸睛，有冲击力，符合新媒体传播规律。
+
+            - 大纲需要结构清晰，包含引言、核心论点（至少3个）和结尾。'
+        selected: true
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 88
+      id: '1761210423213'
+      position:
+        x: 129
+        y: 229
+      positionAbsolute:
+        x: 129
+        y: 229
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1761210423213'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 88
+      id: '1761210468997'
+      position:
+        x: 129
+        y: 453
+      positionAbsolute:
+        x: 129
+        y: 453
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 112.10147881260195
+      y: 32.75778214150435
+      zoom: 1.3195079107728942
+  rag_pipeline_variables: []
